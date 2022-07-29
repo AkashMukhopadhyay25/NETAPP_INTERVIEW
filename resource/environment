@@ -1,0 +1,3 @@
+NETAPP_CVO_API_URL=https://ec2-3-25-117-144.ap-southeast-2.compute.amazonaws.com/api
+NETAPP_CVO_API_USERNAME=squiggle
+NETAPP_CVO_API_PASSWORD=GoLangRocks77

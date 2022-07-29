@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: GET Volume API
+  description: An Api to fetch Specific Volume Details for a list of Volumes
+  contact:
+    name: Akash Mukhopadhyay
+  version: 1.0.0
+servers:
+  - url: https://ec2-3-25-117-144.ap-southeast-2.compute.amazonaws.com/api
+paths:
+  /getVolume:
+    description: API to Fetch Volume Data
+    get:
+      responses:
+        200:
+          description: Success Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Total Number of Volumes:
+                    type: integer
+                    example: 3
+                  Volumes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        Volume UUID:
+                          type: string
+                          example: 5bff7933-07cb-11ed-9826-01cc1cebff23
+                        Volume Name:
+                          type: string
+                          example: test
+                        Volume State:
+                          type: string
+                          example: online
+                        IOPS Density:
+                          type: number
+                          example: 84366.3
+        404:
+          description: PageNotFound
+        500:
+          description: Invalid Server Endpoint, UserName or Password
