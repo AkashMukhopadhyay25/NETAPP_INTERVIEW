@@ -20,8 +20,10 @@ CREDENTIALS = HTTPBasicAuth(USERNAME, PASSWORD)
 def getAggregateData(uuid):
     # Since we only require Statistics IOPS Raw, we are filtering the fields to fetch it.
     # Alternatively, we could fetch the entire data and then capture IOPS Raw through it.
-    aggregateEndpoint = "{}/storage/aggregates/{}?fields=statistics.iops_raw.total".format(
-        ENDPOINT_URL, uuid)
+
+    queryString="fields=statistics.iops_raw.total"
+    aggregateEndpoint = "{}/storage/aggregates/{}?{}".format(ENDPOINT_URL, uuid, queryString)
+    
     try:
         req = requests.get(aggregateEndpoint, auth=CREDENTIALS, verify=False)
     except:
@@ -47,8 +49,10 @@ def serverError(error):
 
 @app.route('/getVolume',  methods=['GET'])
 def getVolumeData():
-    volumeEndpoint = "{}/storage/volumes?fields=uuid,name,state,size,aggregates.uuid,qos.policy".format(
-        ENDPOINT_URL)
+    #As an improvement, we could accept filters from the user and fetch only what's required. 
+    queryString="fields=uuid,name,state,size,aggregates.uuid,qos.policy"
+
+    volumeEndpoint = "{}/storage/volumes?{}".format(ENDPOINT_URL, queryString)
     try:
         req = requests.get(volumeEndpoint, auth=CREDENTIALS, verify=False)
     except Exception:
@@ -56,7 +60,6 @@ def getVolumeData():
         abort(500)
 
     app.logger.info("SuccessFully Fetched Volume Data")
-    app.logger.info("Processing...")
 
     # resp will store the Response.
     resp = {}
