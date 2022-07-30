@@ -39,12 +39,12 @@ def getAggregateData(uuid):
 
 @app.errorhandler(404)
 def pageNotFound(error):
-    return Response("PageNotFound", status=404, mimetype='application/json')
+    return Response("{'message':'Page Not Found'}", status=404, mimetype='application/json')
 
 
 @app.errorhandler(500)
 def serverError(error):
-    return Response("Invalid Server Endpoint, UserName or Password", status=500, mimetype='application/json')
+    return Response("{'message':'Invalid Server Endpoint, UserName or Password'}", status=500, mimetype='application/json')
 
 
 @app.route('/getVolume',  methods=['GET'])
@@ -78,7 +78,7 @@ def getVolumeData():
             volumeSize = val["size"]/(1024*1024*1024)
         except:
             app.logger.error("Invalid Volume Field Queried")
-            return Response("Client Server Error", status=503, mimetype='application/json')
+            return Response("{'message':'Client Server Error'}", status=503, mimetype='application/json')
 
         iopsDensity = 0.0
 
